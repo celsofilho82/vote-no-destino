@@ -1,0 +1,7 @@
+<h2>Escolha um dos destinos abaixo</h2>
+
+<ol>
+  <% @destinations.sample(2).each do |destiny| %>
+    <li><%= destiny.name.capitalize %></li>
+  <% end %>
+</ol>
