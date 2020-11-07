@@ -1,0 +1,9 @@
+<h2>Escolha novos destinos abaixo</h2>
+
+<%= simple_form_for @second_choices, url: up_vote_path do |f| %>
+
+  <%= f.input :id, as: :radio_buttons, collection: @second_choices %>
+
+  <%= f.button :submit, class: "btn-primary" %>
+  
+<% end %>
