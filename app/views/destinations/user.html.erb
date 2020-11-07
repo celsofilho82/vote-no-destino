@@ -1,0 +1,11 @@
+<h2>Informe seus dados para computar os votos</h2>
+
+<%= simple_form_for @user, url: create_user_path do |f| %>
+  <%= f.error_notification %>
+
+  <%= f.input :name %>
+
+  <%= f.input :email, input_html: { autocomplete: 'email' } %>
+
+  <%= f.button :submit, class: "btn-primary" %>
+<% end %>

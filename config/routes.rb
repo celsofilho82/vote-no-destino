@@ -3,5 +3,7 @@ Rails.application.routes.draw do
   root to: 'destinations#home'
   get 'primeiro_destino', to: 'destinations#primeiro_destino'
   get 'segundo_destino', to: 'destinations#segundo_destino'
+  get 'user', to: 'destinations#user'
+  post 'create_user', to: 'destinations#create_user'
   patch 'up-vote', to: 'destinations#up_vote'
 end
