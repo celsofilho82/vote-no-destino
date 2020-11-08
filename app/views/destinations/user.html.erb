@@ -1,8 +1,16 @@
 <div class="container">
-  <h2>Informe seus dados para computarmos os votos</h2>
+  <% unless flash.blank? %>
+    <% flash.each do |error, msg| %>
+      <div class="alert alert-danger" role="alert">
+        <%= msg %>
+      </div>
+    <% end %>
+  <% end %>
+  <h2>Informe seus dados confirmarmos o voto</h2>
 
   <%= simple_form_for @user, url: create_user_path do |f| %>
     <%= f.error_notification %>
+    <%= f.full_error :confirmation_token %>
 
     <%= f.input :name, required: true %>
 
@@ -10,6 +18,6 @@
                 input_html: { autocomplete: 'email' }, 
                 required: true %>
 
-    <%= f.button :submit, "Cadastrar Usuário", class: "btn btn-primary btn-lg" %>
+    <%= f.button :submit, "Confirmar", class: "btn btn btn-success btn-lg" %>
   <% end %>
 <div>
