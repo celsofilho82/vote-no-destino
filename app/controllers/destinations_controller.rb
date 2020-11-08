@@ -33,7 +33,7 @@ class DestinationsController < ApplicationController
   end
 
   def create_user
-    @user = User.first_or_create(params)
+    @user = User.first_or_create(user_params)
     voter = Votersession.find_by(session_id: session_id)
     voter.update(user_id: user.id)
 
