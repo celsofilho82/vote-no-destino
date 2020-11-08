@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get 'primeiro_destino', to: 'destinations#primeiro_destino'
   get 'segundo_destino', to: 'destinations#segundo_destino'
   get 'user', to: 'destinations#user'
-  get 'rank', to: 'destinations#rank'
+  get 'rank/:id', to: 'destinations#rank', as: :rank 
   post 'create_user', to: 'destinations#create_user'
   patch 'up-vote', to: 'destinations#up_vote'
 end

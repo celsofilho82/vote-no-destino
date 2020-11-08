@@ -1,6 +1,6 @@
 class DestinationsController < ApplicationController
   before_action :load_destinations, only: [:primeiro_destino, :segundo_destino, :rank]
-  before_action :set_voter, only: [:up_vote, :create_user, :rank]
+  before_action :set_voter, only: [:up_vote]
 
   def home
   end
@@ -37,15 +37,15 @@ class DestinationsController < ApplicationController
 
     if User.exists?(user_params)
       user = User.find_by(user_params)
-      @voter.update(user_id: user.id)
+      confirm_vote(user)
 
-      return redirect_to rank_path
+      return redirect_to rank_path user
     end
 
     if user.save
-      @voter.update(user_id: user.id)
+      confirm_vote(user)
       
-      return redirect_to rank_path
+      return redirect_to rank_path user
     else
       flash[:error] = user.errors
       return redirect_to user_path
@@ -53,14 +53,26 @@ class DestinationsController < ApplicationController
   end
 
   def rank
-    voted_items = @voter.find_voted_items
-    @destinos = voted_items.group_by{|i| i}.map{|k,v| [k.name, v.count] }.to_h
+    voted_items = []
+    sessions = Votersession.where(user_id: params[:id])
+    sessions.each do |session|
+      voted_items << session.find_voted_items
+    end
+
+    @destinos = voted_items
+                .flatten
+                .group_by{ |i| i }
+                .map{ |k,v| [k.name, v.count] }.to_h
   end
 
   private
 
+  def confirm_vote(user)
+    Votersession.last(2).each{ |session| session.update(user_id: user.id) }
+  end
+
   def set_voter
-    @voter = Votersession.first_or_create(
+    @voter = Votersession.create!(
       session_id: request.session_options[:id].to_s
     )
   end
