@@ -1,0 +1,39 @@
+<div class="container">
+  <h2>Rank Geral</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Destino</th>
+        <th scope="col">Votos</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @destinations.each do |destino| %>
+      <tr>
+        <td><%= destino.name %></td>
+        <td><%= destino.votes_for.count %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <br>
+  <h2>Seu votos nessa sessão</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Destino</th>
+        <th scope="col">Votos</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @destinos.each do |destino, votos| %>
+      <tr>
+        <td><%= destino %></td>
+        <td><%= votos %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>  
+
+  <%= link_to 'Home', root_path %>
+</div>

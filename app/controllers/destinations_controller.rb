@@ -1,5 +1,5 @@
 class DestinationsController < ApplicationController
-  before_action :load_destinations, only: [:primeiro_destino, :segundo_destino]
+  before_action :load_destinations, only: [:primeiro_destino, :segundo_destino, :rank]
 
   def home
   end
@@ -18,8 +18,8 @@ class DestinationsController < ApplicationController
 
   def up_vote
     destino = Destination.find(destination_params[:id])
-    voter = Votersession.first_or_create(session_id: request.session_options[:id])
-    destino.upvote_by voter
+    voter = Votersession.first_or_create(session_id: session_id)
+    destino.vote_by voter: voter, :duplicate => true
     if request.headers["referer"].include?("primeiro_destino")
       
       redirect_to segundo_destino_path
@@ -34,13 +34,22 @@ class DestinationsController < ApplicationController
 
   def create_user
     @user = User.first_or_create(params)
-    voter = Votersession.find_by(session_id: request.session_options[:id].to_s)
+    voter = Votersession.find_by(session_id: session_id)
     voter.update(user_id: user.id)
 
-    render :home
+    redirect_to rank_path
+  end
+
+  def rank
+    voted_items = Votersession.find_by(session_id: session_id).find_voted_items
+    @destinos = voted_items.group_by{|i| i}.map{|k,v| [k.name, v.count] }.to_h
   end
 
   private
+
+  def session_id
+    request.session_options[:id].to_s
+  end
 
   def load_destinations
     @destinations = Destination.all
