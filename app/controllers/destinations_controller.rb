@@ -33,16 +33,23 @@ class DestinationsController < ApplicationController
   end
 
   def create_user
+    user = User.new(user_params)
+
     if User.exists?(user_params)
       user = User.find_by(user_params)
       @voter.update(user_id: user.id)
 
-      redirect_to rank_path
+      return redirect_to rank_path
     end
-    user = User.create!(user_params)
-    @voter.update(user_id: user.id)
-    
-    redirect_to rank_path
+
+    if user.save
+      @voter.update(user_id: user.id)
+      
+      return redirect_to rank_path
+    else
+      flash[:error] = user.errors
+      return redirect_to user_path
+    end
   end
 
   def rank
@@ -53,11 +60,9 @@ class DestinationsController < ApplicationController
   private
 
   def set_voter
-    @voter = Votersession.first_or_create(session_id: session_id)
-  end
-
-  def session_id
-    request.session_options[:id].to_s
+    @voter = Votersession.first_or_create(
+      session_id: request.session_options[:id].to_s
+    )
   end
 
   def load_destinations
