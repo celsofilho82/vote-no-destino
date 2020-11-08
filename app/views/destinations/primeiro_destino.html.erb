@@ -1,9 +1,11 @@
-<h2>Escolha um dos destinos abaixo</h2>
+<div class="container">
+  <h2>Qual destes lugares você gosta mais?</h2>
 
-<%= simple_form_for @first_choices, url: up_vote_path do |f| %>
+  <%= simple_form_for @first_choices, url: up_vote_path do |f| %>
 
-  <%= f.input :id, as: :radio_buttons, collection: @first_choices %>
+    <%= f.input :id, label: '', as: :radio_buttons, collection: @first_choices %>
 
-  <%= f.button :submit, class: "btn-primary" %>
-  
-<% end %>
+    <%= f.button :submit, 'Votar', class:"btn btn-primary btn-lg" %>
+    
+  <% end %>
+</div>

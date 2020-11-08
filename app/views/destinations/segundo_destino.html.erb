@@ -1,9 +1,10 @@
-<h2>Escolha novos destinos abaixo</h2>
+<div class="container">
+<h2>Destes outros qual você gostaria de conhecer?</h2>
+  <%= simple_form_for @second_choices, url: up_vote_path do |f| %>
 
-<%= simple_form_for @second_choices, url: up_vote_path do |f| %>
+    <%= f.input :id, label: '', as: :radio_buttons, collection: @second_choices %>
 
-  <%= f.input :id, as: :radio_buttons, collection: @second_choices %>
-
-  <%= f.button :submit, class: "btn-primary" %>
-  
-<% end %>
+    <%= f.button :submit, 'Votar', class:"btn btn-primary btn-lg" %>
+    
+  <% end %>
+</div>
