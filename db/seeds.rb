@@ -5,3 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+['Rio de Janeiro', 'São Paulo', 'Cancun', 'Las Vegas', 'Buenos Aires'].each do |destino|
+  Destination.create!(name: destino)
+end
+
+puts 'Destinos criados com sucesso!'
