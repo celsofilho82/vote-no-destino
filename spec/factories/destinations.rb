@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :destiny do
+  factory :destination do
     name { 'Salvador' }
   end
 end
