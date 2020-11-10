@@ -30,7 +30,7 @@
   RAILS_ENV=test rails db:migrate
   rspec spec/features/
   ```
-
+  
 #### Deployment instructions
 
 
@@ -79,7 +79,7 @@ rails s
 
 And now you can visit the site with the URL http://localhost:3000
 
-#### Deploying on Heroku
+# Deploy on Heroku
 
 Alternatively you can access this application on heroku through this address:
 
